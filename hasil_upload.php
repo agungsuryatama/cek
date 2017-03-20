@@ -37,7 +37,7 @@ $myArray = explode(" ", $teks); //proses tokenisasi
 
 
 $filteredarray = array_diff($myArray, $astoplist); //remove stopword
-$st = new IDNstemmer(); 
+$st = new IDNstemmer();
 $konek = mysqli_connect("localhost","root","","dbstbi");
 foreach($filteredarray as $filteredarray){
    // echo $filteredarray.'<br>';  
@@ -46,12 +46,13 @@ if (strlen($filteredarray) >=4)
 	  {
 echo ">>".$filteredarray;
 $hasil=$st->doStemming($filteredarray);
+$hasil2=Enhanced_CS($filteredarray);
 //$st->doStemming($filteredarray)
-	   echo " ".$hasil.'<br>';
-	   $query = "INSERT INTO dokumen (nama_file, token, tokenstem)
-            VALUES('$nama_file','$filteredarray','$hasil')";
-            
-  mysqli_query($konek, $query);
+	   echo " ".$hasil." ".$hasil2.'<br>';
+	   
+	   $query = "INSERT INTO dokumen (nama_file, token, tokenstem, tokenstem2)
+            VALUES('$nama_file', '$filteredarray', '$hasil', '$hasil2')";
+             mysqli_query($konek, $query);
 	  }
 	  
 }
